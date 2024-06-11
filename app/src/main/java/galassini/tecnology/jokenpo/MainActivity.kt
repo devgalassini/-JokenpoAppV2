@@ -1,6 +1,7 @@
 package galassini.tecnology.jokenpo
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
@@ -16,16 +17,19 @@ import galassini.tecnology.jokenpo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     lateinit var activityMain: ActivityMainBinding
-
-    // Created Navigation View
     lateinit var drawer: DrawerLayout
     lateinit var navDrawer: NavigationView
     lateinit var navController: NavController
     lateinit var appBarConfiguration: AppBarConfiguration
     lateinit var bottomNav: BottomNavigationView
 
+    companion object {
+        const val TAG = "MainActivity"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "onCreate")
 
         activityMain = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMain.root)
@@ -35,7 +39,6 @@ class MainActivity : AppCompatActivity() {
         navDrawer = activityMain.navView
         bottomNav = activityMain.bottomNav
 
-        // Set instantiate object for navView.
         val navHostController =
             supportFragmentManager.findFragmentById(R.id.fragmentView) as NavHostFragment
         navController = navHostController.navController
@@ -51,14 +54,44 @@ class MainActivity : AppCompatActivity() {
 
         bottomNav.setupWithNavController(navController)
 
-        // Create navigation button
         setupActionBarWithNavController(navController, appBarConfiguration)
         navDrawer.setupWithNavController(navController)
         bottomNav.setupWithNavController(navController)
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
+        Log.d(TAG, "onSupportNavigateUp")
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d(TAG, "onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d(TAG, "onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Log.d(TAG, "onSaveInstanceState")
+
     }
 }
