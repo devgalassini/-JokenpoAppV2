@@ -1,38 +1,46 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Jokenpo" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <item name="colorPrimary">@color/grey_theme</item>
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Theme.Jokenpo" parent="Theme.MaterialComponents.DayNight">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/gray</item>
+        <item name="colorPrimaryVariant">@color/minimal_gray</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
     </style>
 
-    <!--Config for Jokenpo Game-->
     <style name="Theme.Jokenpo.NoActionBar">
+        <!-- Habilita ou não a action bar do tema do app -->
         <item name="windowActionBar">false</item>
+        <!-- Habilita ou não o titulo do app na action bar -->
         <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:itemTextAppearance">@style/menuItem</item>
+        <item name="android:spinnerItemStyle">@style/spinnerItemStyle</item>
+        <item name="android:dropDownSpinnerStyle">@style/spinnerItemStyle</item>
+        <item name="android:spinnerDropDownItemStyle">@style/spinnerItemStyle</item>
     </style>
 
-    <style name="ToolbarStyle">
-        <item name="android:textColorPrimary">@color/white</item>
+    <style name="menuItem" parent="Widget.AppCompat.TextView.SpinnerItem">
+        <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="ToolBarPopupStyle">
-        <item name="android:textColorPrimary">@color/white</item>
-        <!--        <item name="popupMenuBackground">#FF798E91</item>-->
+    <style name="spinnerItemStyle" parent="Widget.AppCompat.TextView.SpinnerItem">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAlignment">center</item>
     </style>
 
-    <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
-        <item name="android:textSize">20dp</item>
+    <style name="BottomNavigationViewTextStyle" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="BottomNavigationView.Active" parent="@style/TextAppearance.AppCompat.Caption">
-        <item name="android:textSize">20dp</item>
+    <style name="NavigationViewTextStyle" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">20sp</item>
     </style>
-
-    <style name="Theme.Jokenpo" parent="Base.Theme.Jokenpo" />
-
-    <style name="Theme.Jokenpo.AppOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="Theme.Jokenpo.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
-
 </resources>

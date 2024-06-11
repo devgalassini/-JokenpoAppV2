@@ -1,8 +1,11 @@
 package galassini.tecnology.jokenpo
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
@@ -15,83 +18,112 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import galassini.tecnology.jokenpo.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
-    lateinit var activityMain: ActivityMainBinding
-    lateinit var drawer: DrawerLayout
-    lateinit var navDrawer: NavigationView
-    lateinit var navController: NavController
-    lateinit var appBarConfiguration: AppBarConfiguration
-    lateinit var bottomNav: BottomNavigationView
-
-    companion object {
-        const val TAG = "MainActivity"
-    }
-
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var bottomNavigationView: BottomNavigationView
+    var currentPlayer: String = "Pedra"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "onCreate")
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        drawerLayout = binding.root
 
-        activityMain = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(activityMain.root)
-        setSupportActionBar(activityMain.toolbar)
+        setupNavigationComponent()
+        setupActionBar()
+        setupVisibilityBottomNavigation()
+        setBottomNavigationController()
+        setDrawerLayoutNavigationController()
+        setContentView(binding.root)
 
-        drawer = activityMain.root
-        navDrawer = activityMain.navView
-        bottomNav = activityMain.bottomNav
+        supportActionBar?.hide()
 
-        val navHostController =
-            supportFragmentManager.findFragmentById(R.id.fragmentView) as NavHostFragment
-        navController = navHostController.navController
+    }
 
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment, R.id.resultFragment), drawer)
+    private fun setDrawerLayoutNavigationController() {
+        val drawerLayout = binding.navigationView
+        drawerLayout.setupWithNavController(navController)
+        drawerLayout.setNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.resultFragment ->{
+                    val args = Bundle()
+                    args.putString("currentPlay", currentPlayer)
+                    navController.navigate(it.itemId, args)
+                }
+                else -> navController.navigate(it.itemId)
+            }
+            true
+        }
+    }
 
+    private fun setupActionBar() {
+        appBarConfiguration =
+            AppBarConfiguration(
+                setOf(
+                    R.id.playSelectionFragment,
+                    R.id.resultFragment
+                ),
+                drawerLayout
+            )
+        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
+    }
+
+    private fun setBottomNavigationController() {
+        bottomNavigationView = binding.bottomNavigation
+        bottomNavigationView.setupWithNavController(navController)
+        bottomNavigationView.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.resultFragment ->{
+                    val args = Bundle()
+                    args.putString("currentPlay", currentPlayer)
+                    navController.navigate(it.itemId, args)
+                }
+                else -> navController.navigate(it.itemId)
+            }
+            true
+        }
+    }
+
+    private fun setupNavigationComponent() {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_graph_jokenpo) as NavHostFragment
+        navController = navHostFragment.navController
+    }
+
+    private fun setupVisibilityBottomNavigation() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.homeFragment -> bottomNav.visibility = View.GONE
-                else -> bottomNav.visibility = View.VISIBLE
+                R.id.homeFragment -> {
+                    binding.bottomNavigation.visibility = View.GONE
+                }
+                else -> {
+                    binding.bottomNavigation.visibility = View.VISIBLE
+                }
             }
+
         }
-
-        bottomNav.setupWithNavController(navController)
-
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navDrawer.setupWithNavController(navController)
-        bottomNav.setupWithNavController(navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        Log.d(TAG, "onSupportNavigateUp")
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.d(TAG, "onStart")
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        outState.putString("State","Texto")
     }
 
-    override fun onResume() {
-        super.onResume()
-        Log.d(TAG, "onResume")
-    }
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+        val availablePlays = resources.getStringArray(R.array.available_plays_array)
+        currentPlayer =  availablePlays[p2]
 
-    override fun onPause() {
-        super.onPause()
-        Log.d(TAG, "onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d(TAG, "onStop")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d(TAG, "onDestroy")
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        Log.d(TAG, "onSaveInstanceState")
+        Toast.makeText(this, currentPlayer, Toast.LENGTH_SHORT).show()
 
     }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+        TODO("Not yet implemented")
+    }
+
 }

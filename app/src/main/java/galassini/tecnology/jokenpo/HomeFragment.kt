@@ -2,40 +2,33 @@ package galassini.tecnology.jokenpo
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.onNavDestinationSelected
 import galassini.tecnology.jokenpo.databinding.FragmentHomeBinding
 
-
 class HomeFragment : Fragment() {
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        val homeFragment = FragmentHomeBinding.inflate(inflater, container, false)
-
-        homeFragment.startActivityButton.setOnClickListener {
+        binding.buttonInit.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToNavigation()
             findNavController().navigate(action)
         }
 
-        // Inflate the layout for this fragment
-        return homeFragment.root
+        return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.setting_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return item.onNavDestinationSelected(findNavController())
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

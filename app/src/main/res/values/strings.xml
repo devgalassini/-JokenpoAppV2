@@ -1,17 +1,20 @@
 <resources>
     <string name="app_name">Jokenpo</string>
-    <string name="player">Jogador</string>
-    <string name="result">Resultado</string>
-    <string name="welcome">Bem vindo ao Jokenpo</string>
-    <string name="start_bottom">Iniciar</string>
-    <string name="setting_menu">Reiniciar</string>
-    <string name="select_player">Selecione o jogo</string>
-    <string-array name="spinner">
-        <item> Pedra </item>
-        <item> Tesoura </item>
-        <item> Papel </item>
+    <string name="app_name_initial_screen">Jokenpô</string>
+    <string name="welcome_text">Bem vindo ao Jokenpô</string>
+    <string name="start_game">Start Game</string>
+    <string name="player_one">Player One</string>
+    <string name="select_movement">Selecionar jogada</string>
+    <string name="home_label">Inicio</string>
+    <string name="jogador_1">Jogador</string>
+    <string name="resulted">Resultado</string>
+    <string name="result">RESULTADO</string>
+    <string name="result_palyer_game">O jogador %s \n ganhou</string>
+    <string name="home">Reiniciar jogo</string>
+
+    <string-array name="available_plays_array">
+        <item>Pedra</item>
+        <item>Papel</item>
+        <item>Tesoura</item>
     </string-array>
-    <string name="champion">O jogador xxx ganhou</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

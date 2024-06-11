@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/playSelectionFragment"
+        android:icon="@drawable/ic_player"
+        android:title="@string/jogador_1"
+        />
+    <item
+        android:id="@+id/resultFragment"
+        android:icon="@drawable/ic_result"
+        android:title="@string/resulted"
+        />
+
+
+</menu>
